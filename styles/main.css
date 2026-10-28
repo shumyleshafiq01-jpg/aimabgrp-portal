@@ -221,24 +221,53 @@ body {
   gap: 16px;
 }
 
-.brand-logo-liquid {
-  width: 44px;
-  height: 44px;
-  position: relative;
-  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(0, 240, 212, 0.4));
-  box-shadow: 0 8px 20px rgba(0, 240, 212, 0.35);
+.brand-logo-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: logoMorph 8s infinite alternate ease-in-out;
-  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05), 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  transition: var(--transition-smooth);
 }
 
-@keyframes logoMorph {
-  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-  50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  100% { border-radius: 50% 60% 40% 60% / 40% 60% 50% 60%; }
+[data-theme="dark"] .brand-logo-wrap {
+  background: rgba(7, 42, 50, 0.55);
+  border: 1px solid rgba(24, 214, 199, 0.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 1px rgba(24, 214, 199, 0.2) inset;
+}
+
+.brand-logo-wrap:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 24px rgba(244, 115, 32, 0.2);
+}
+
+.brand-mab-logo {
+  height: 38px;
+  width: auto;
+  max-width: 110px;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-dark-mode {
+  display: none !important;
+}
+
+.logo-light-mode {
+  display: block !important;
+}
+
+[data-theme="dark"] .logo-dark-mode {
+  display: block !important;
+}
+
+[data-theme="dark"] .logo-light-mode {
+  display: none !important;
 }
 
 .brand-info {
