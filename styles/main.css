@@ -1121,3 +1121,104 @@ body {
     font-size: 1.8rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   15. Executive Footer Attribution
+   -------------------------------------------------------------------------- */
+.glass-footer {
+  margin-top: 48px;
+  margin-bottom: 24px;
+  padding: 18px 28px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  z-index: 10;
+  transition: var(--transition-smooth);
+}
+
+.footer-attribution {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.neurogrid-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--brand-accent);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  text-decoration: none;
+  padding: 5px 14px;
+  border-radius: 12px;
+  background: rgba(13, 148, 136, 0.12);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+  transition: var(--transition-smooth);
+}
+
+.neurogrid-link:hover {
+  background: rgba(13, 148, 136, 0.22);
+  border-color: var(--brand-accent);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35);
+  color: var(--brand-aqua);
+}
+
+.neurogrid-glow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-emerald);
+  box-shadow: 0 0 8px var(--brand-emerald);
+}
+
+.external-icon {
+  opacity: 0.75;
+  transition: transform 0.2s ease;
+}
+
+.neurogrid-link:hover .external-icon {
+  opacity: 1;
+  transform: translate(1px, -1px);
+}
+
+.footer-security-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.footer-divider {
+  opacity: 0.4;
+}
+
+@media (max-width: 640px) {
+  .glass-footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    padding: 16px 20px;
+  }
+  .footer-security-meta {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
