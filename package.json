@@ -1,0 +1,22 @@
+{
+  "name": "aimabgrp-portal",
+  "version": "1.0.0",
+  "description": "MAB Group Enterprise ERP AI Integration & SOLAS Maritime Automation Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "mab-group",
+    "neurogrid-labs",
+    "glassmorphism",
+    "neumorphism",
+    "liquid-glass",
+    "solas",
+    "maritime",
+    "erp-integration"
+  ],
+  "author": "NeuroGrid Labs (Pvt.) Ltd.",
+  "license": "UNLICENSED"
+}

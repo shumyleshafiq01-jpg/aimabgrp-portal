@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aimabgrp.com | MAB Group Enterprise ERP AI Integration &amp; SOLAS Maritime Automation</title>
+  <meta name="description" content="Official Enterprise Portal for MAB Group powered by NeuroGrid Labs. Featuring Glassmorphism, Neumorphism, and Liquid Glass Material Aesthetics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- Ambient Organic Lighting Canvas for Real Glass Refraction -->
+  <div class="ambient-canvas">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- ====================================================================
+         1. TOP STICKY GLASS HEADER & DOMAIN ACQUISITION PILL
+         ==================================================================== -->
+    <header class="glass-header">
+      <div class="brand-wrapper">
+        <div class="brand-logo-liquid">
+          <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
+            <polygon points="30,6 54,50 6,50" stroke="#08333c" stroke-width="5" fill="none" />
+            <polygon points="30,20 44,48 16,48" fill="#0d9488" />
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-row">
+            <span class="brand-name">MAB GROUP</span>
+            <span class="brand-partner-badge">NeuroGrid AI Partner</span>
+          </div>
+          <span class="brand-subtitle">Enterprise ERP AI Integration &amp; SOLAS Maritime Automation</span>
+        </div>
+      </div>
+
+      <!-- Operational System Status -->
+      <div class="system-status-indicator">
+        <span class="status-pulse-dot"></span>
+        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">
+          Core AI Pipeline <strong style="color: var(--brand-emerald);">Active</strong>
+        </span>
+      </div>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- Sound FX Toggle -->
+        <button class="neu-btn neu-icon-btn active" id="soundToggleBtn" title="Toggle UI Sound Feedback">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Theme Switcher (Pearl Light / Deep Oceanic Teal) -->
+        <button class="neu-btn" id="themeToggleBtn" title="Switch Material Theme">
+          <span id="themeIcon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span style="font-size: 0.78rem;">Theme</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         EXECUTIVE MARITIME AI DASHBOARD HEADER
+         ==================================================================== -->
+    <section class="dashboard-hero-header">
+      <div class="dash-hero-content">
+        <div class="dash-hero-eyebrow">
+          <span class="eyebrow-chip">OPERATIONS CONTROL</span>
+          <span class="eyebrow-meta">Maritime ERP &amp; SOLAS Compliance Hub</span>
+        </div>
+        <h1 class="dash-hero-title">
+          Enterprise Fleet &amp; <span class="gradient-text">Maritime Operations</span>
+        </h1>
+        <p class="dash-hero-desc">
+          Automated bidirectional ERP bridge, SOLAS &amp; ISO compliance verification, life raft lifecycle tracking, and omnichannel AI alerts.
+        </p>
+      </div>
+
+      <div class="dash-hero-metrics">
+        <div class="hero-metric-tile">
+          <span class="tile-label">Fleet Monitored</span>
+          <span class="tile-value">04 <span class="tile-unit">Vessels</span></span>
+          <span class="tile-sub">Active SOLAS Watch</span>
+        </div>
+        <div class="hero-metric-tile">
+          <span class="tile-label">Bridge Latency</span>
+          <span class="tile-value text-accent">13.8 <span class="tile-unit">ms</span></span>
+          <span class="tile-sub">TLS 1.3 Bidirectional</span>
+        </div>
+        <div class="hero-metric-tile">
+          <span class="tile-label">System Health</span>
+          <span class="tile-value text-emerald">99.98%</span>
+          <span class="tile-sub">Zero Sync Anomalies</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. NEUMORPHIC NAVIGATION SEGMENT CONTROLLER
+         ==================================================================== -->
+    <div class="dashboard-nav-container">
+      <nav class="neu-tabs-nav" aria-label="Dashboard Navigation Tabs">
+        <button class="neu-tab-btn active" data-tab="tab-erp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          ERP AI Bridge
+        </button>
+        <button class="neu-tab-btn" data-tab="tab-solas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          SOLAS &amp; ISO Compliance
+        </button>
+        <button class="neu-tab-btn" data-tab="tab-radar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+          Life Raft Fleet Radar
+        </button>
+        <button class="neu-tab-btn" data-tab="tab-notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Omnichannel AI Alerting
+        </button>
+        <button class="neu-tab-btn" data-tab="tab-security">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Multi-User &amp; Audit Logs
+        </button>
+      </nav>
+    </div>
+
+    <!-- ====================================================================
+         5. DASHBOARD PANELS
+         ==================================================================== -->
+
+    <!-- PANEL 1: ERP AI PIPELINE & STREAMING TERMINAL -->
+    <div class="dashboard-panel-view active" id="tab-erp">
+      <!-- 4 KPI Cards -->
+      <div class="grid-4kpi">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>Synced ERP Records</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          </div>
+          <div class="kpi-value" id="kpiRecordsCount">148,920</div>
+          <div class="kpi-trend trend-up">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            +184 records today
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>Bridge Latency</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="kpi-value" id="kpiLatency">13.8 ms</div>
+          <div class="kpi-trend trend-up">TLS 1.3 End-to-End</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>Sync Integrity</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="kpi-value">99.98%</div>
+          <div class="kpi-trend trend-up">0 Dropped Packets</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span>Fleet Coverage</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+          </div>
+          <div class="kpi-value" style="font-size: 1.15rem; color: var(--brand-accent);">4 Active Vessels</div>
+          <div class="kpi-trend trend-up">Full Fleet Real-Time Watch</div>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <!-- Streaming Terminal Console -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              </div>
+              <div>
+                <div class="panel-title">Bidirectional ERP Telemetry Stream</div>
+                <div class="panel-subtitle">Live socket connection with MAB Group internal SQL/ODBC engine</div>
+              </div>
+            </div>
+            <button class="neu-btn" id="syncBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              Run Live Handshake &amp; DB Sync
+            </button>
+          </div>
+
+          <div class="terminal-window">
+            <div class="terminal-titlebar">
+              <div class="terminal-dots">
+                <span class="terminal-dot dot-red"></span>
+                <span class="terminal-dot dot-yellow"></span>
+                <span class="terminal-dot dot-green"></span>
+              </div>
+              <span class="terminal-heading">aimabgrp-bridge@neurogrid-ai:~ /sync-stream</span>
+              <span style="font-size: 0.7rem; color: #64748b;">TLS 1.3 • AES-256</span>
+            </div>
+            <div class="terminal-content" id="terminalContent">
+              <!-- Logs populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Schema Mapping & Architecture Status -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              </div>
+              <div>
+                <div class="panel-title">ERP Schema Integration Mapping</div>
+                <div class="panel-subtitle">Enterprise Database Schema Synchronization</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span class="lbl">Legacy Tables Mapped:</span>
+              <span class="val">14 of 16 Tables (87.5%)</span>
+            </div>
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span class="lbl">API Connector Engine:</span>
+              <span class="val" style="color: var(--brand-emerald);">REST + Webhooks Active</span>
+            </div>
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span class="lbl">Audit Trails &amp; Roles:</span>
+              <span class="val">Role-Based Multi-User Enabled</span>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.4); border-radius: 12px; padding: 14px; margin-top: 6px; font-size: 0.8rem; border: 1px solid var(--glass-border-subtle);">
+              <strong style="color: var(--brand-teal);">Engineering Status:</strong>
+              <p style="color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                The data pipeline extracts vessel inspection manifests, crew rosters, and inventory lot numbers directly from MAB Group's legacy database, enriching records with AI vector embeddings for instantaneous SOLAS validation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: SOLAS & ISO COMPLIANCE AUTOMATED DOCUMENTATION -->
+    <div class="dashboard-panel-view" id="tab-solas">
+      <div class="grid-2col">
+        <!-- Interactive Form Fill Generator -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="panel-title">Automated Form Filling &amp; Verification</div>
+                <div class="panel-subtitle">SOLAS Protocols &amp; ISO 9001/14001 Standards</div>
+              </div>
+            </div>
+          </div>
+
+          <form id="solasForm" onsubmit="event.preventDefault();" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">Select Target Vessel</label>
+              <select class="form-input-neu" id="vesselSelect">
+                <option value="MV Al-Mabrouk">MV Al-Mabrouk (IMO 9283712) - Panama</option>
+                <option value="MV Arabian Pearl">MV Arabian Pearl (IMO 9482156) - Bahamas</option>
+                <option value="MT Indus Voyager">MT Indus Voyager (IMO 9154829) - Liberia</option>
+                <option value="MV Sindh Star">MV Sindh Star (IMO 9301984) - Marshall Islands</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">Compliance Standard</label>
+              <select class="form-input-neu" id="certTypeSelect">
+                <option value="SOLAS Chapter III (Life-Saving Appliances)">SOLAS Chapter III (Life-Saving Appliances &amp; Rafts)</option>
+                <option value="SOLAS Chapter V (Safety of Navigation)">SOLAS Chapter V (Safety of Navigation &amp; AIS)</option>
+                <option value="ISO 9001:2015 Marine Technical Quality">ISO 9001:2015 Marine Technical Quality Audit</option>
+                <option value="ISO 14001:2015 Environmental Protection">ISO 14001:2015 Environmental Protection</option>
+              </select>
+            </div>
+
+            <button class="neu-btn" id="generateCertBtn" style="padding: 14px 20px; justify-content: center; font-size: 0.9rem; font-weight: 800; background: linear-gradient(135deg, rgba(13, 148, 136, 0.15), rgba(0, 240, 212, 0.2)); border: 1px solid var(--brand-accent);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              Run AI Auto-Fill &amp; Issue Verification
+            </button>
+          </form>
+        </div>
+
+        <!-- Official Live Certificate Preview (Glass White Theme) -->
+        <div class="cert-preview-card" id="certPreviewCard">
+          <div class="cert-watermark">SOLAS VERIFIED</div>
+          <div class="cert-header">
+            <div>
+              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px; color: var(--brand-accent); text-transform: uppercase;">INTERNATIONAL MARITIME SAFETY COMPLIANCE</div>
+              <div style="font-size: 1.15rem; font-weight: 900; color: var(--brand-teal-deep); letter-spacing: 0.5px;">OFFICIAL SOLAS CERTIFICATE</div>
+            </div>
+            <div class="cert-seal">
+              MAB<br>TECH
+            </div>
+          </div>
+
+          <div class="cert-grid-fields">
+            <div class="cert-field">
+              <span class="lbl">Vessel Name</span>
+              <div class="val" id="certVesselName">MV Al-Mabrouk</div>
+            </div>
+            <div class="cert-field">
+              <span class="lbl">IMO Reference</span>
+              <div class="val" id="certImo">IMO 9283712</div>
+            </div>
+            <div class="cert-field">
+              <span class="lbl">Compliance Standard</span>
+              <div class="val" id="certStandard">SOLAS Chapter III</div>
+            </div>
+            <div class="cert-field">
+              <span class="lbl">Document Token</span>
+              <div class="val" id="certRefNum" style="font-family: var(--font-mono); color: var(--brand-accent);">SOLAS-MAB-982144</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <div class="cert-checklist-item">
+              <span class="check-icon-pass">✓</span>
+              <span>Life Raft Hydrostatic Release Units (HRU) Tested &amp; Active</span>
+            </div>
+            <div class="cert-checklist-item">
+              <span class="check-icon-pass">✓</span>
+              <span>Emergency Radio Beacon (EPIRB) 406MHz Calibration Confirmed</span>
+            </div>
+            <div class="cert-checklist-item">
+              <span class="check-icon-pass">✓</span>
+              <span>Surveyor Inspection Auto-Logged to SECP &amp; MAB ERP</span>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1.5px solid #e2e8f0; padding-top: 10px; font-size: 0.75rem;">
+            <div>
+              <div style="font-weight: 700; color: var(--brand-teal-deep);">Authorized Digital Sign-off:</div>
+              <div style="color: #64748b;">NeuroGrid Automated Compliance Engine</div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-family: var(--font-mono); font-weight: 700;" id="certTimestamp">28 Oct 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: LIFE RAFT FLEET RADAR -->
+    <div class="dashboard-panel-view" id="tab-radar">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <div class="panel-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            </div>
+            <div>
+              <div class="panel-title">Life Raft Lifecycle &amp; Expiry Radar</div>
+              <div class="panel-subtitle">Automated inspection countdown &amp; mandatory safety alerts</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="neu-btn radar-filter-btn active" data-filter="all">All Fleets</button>
+            <button class="neu-btn radar-filter-btn" data-filter="urgent">Urgent (<30D)</button>
+            <button class="neu-btn radar-filter-btn" data-filter="amber">Due Soon</button>
+            <button class="neu-btn radar-filter-btn" data-filter="safe">Safe</button>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div style="margin-bottom: 16px;">
+          <input type="text" class="form-input-neu" id="radarSearchInput" placeholder="Search by Life Raft ID, Vessel, or IMO number...">
+        </div>
+
+        <div class="radar-table-wrapper">
+          <table class="radar-table">
+            <thead>
+              <tr>
+                <th>Raft ID</th>
+                <th>Assigned Vessel</th>
+                <th>Capacity / Type</th>
+                <th>HRU Serial</th>
+                <th>Last Service</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-status="urgent">
+                <td style="font-family: var(--font-mono); font-weight: 700;">#LR-2024-88</td>
+                <td style="font-weight: 700;">MV Al-Mabrouk</td>
+                <td>25-Person SOLAS Pack A</td>
+                <td style="font-family: var(--font-mono);">HRU-9921</td>
+                <td>12 Nov 2025</td>
+                <td style="font-family: var(--font-mono); color: var(--brand-rose); font-weight: 700;">10 Nov 2026 (13d)</td>
+                <td><span class="badge-status urgent">⚠️ Expiry Urgent</span></td>
+                <td style="text-align: right;">
+                  <button class="neu-btn btn-service-notice" data-raft="LR-2024-88">Dispatch Notice</button>
+                </td>
+              </tr>
+
+              <tr data-status="amber">
+                <td style="font-family: var(--font-mono); font-weight: 700;">#LR-2024-94</td>
+                <td style="font-weight: 700;">MV Arabian Pearl</td>
+                <td>20-Person SOLAS Pack A</td>
+                <td style="font-family: var(--font-mono);">HRU-9940</td>
+                <td>28 Nov 2025</td>
+                <td style="font-family: var(--font-mono); color: var(--brand-amber); font-weight: 700;">25 Nov 2026 (28d)</td>
+                <td><span class="badge-status amber">Due in 28 Days</span></td>
+                <td style="text-align: right;">
+                  <button class="neu-btn btn-service-notice" data-raft="LR-2024-94">Dispatch Notice</button>
+                </td>
+              </tr>
+
+              <tr data-status="safe">
+                <td style="font-family: var(--font-mono); font-weight: 700;">#LR-2025-02</td>
+                <td style="font-weight: 700;">MT Indus Voyager</td>
+                <td>16-Person Davit-Launch</td>
+                <td style="font-family: var(--font-mono);">HRU-1024</td>
+                <td>15 Jan 2026</td>
+                <td style="font-family: var(--font-mono); color: var(--brand-emerald); font-weight: 700;">15 Jan 2027 (78d)</td>
+                <td><span class="badge-status safe">✓ Certified Safe</span></td>
+                <td style="text-align: right;">
+                  <button class="neu-btn btn-service-notice" data-raft="LR-2025-02">Dispatch Notice</button>
+                </td>
+              </tr>
+
+              <tr data-status="safe">
+                <td style="font-family: var(--font-mono); font-weight: 700;">#LR-2025-18</td>
+                <td style="font-weight: 700;">MV Sindh Star</td>
+                <td>25-Person SOLAS Pack A</td>
+                <td style="font-family: var(--font-mono);">HRU-1088</td>
+                <td>04 Mar 2026</td>
+                <td style="font-family: var(--font-mono); color: var(--brand-emerald); font-weight: 700;">04 Mar 2027 (127d)</td>
+                <td><span class="badge-status safe">✓ Certified Safe</span></td>
+                <td style="text-align: right;">
+                  <button class="neu-btn btn-service-notice" data-raft="LR-2025-18">Dispatch Notice</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: OMNICHANNEL AI ALERTING (WHATSAPP & CORPORATE EMAIL) -->
+    <div class="dashboard-panel-view" id="tab-notifications">
+      <div class="grid-2col">
+        <!-- WhatsApp Phone Mockup -->
+        <div class="whatsapp-phone-mockup">
+          <div class="wa-top-header">
+            <div class="wa-avatar">MAB</div>
+            <div>
+              <div class="wa-contact-title">MAB Maritime Alert Bot</div>
+              <div class="wa-contact-status">Verified Corporate AI • Online</div>
+            </div>
+          </div>
+          <div class="wa-chat-body" id="waChatBody">
+            <div class="wa-bubble-received">
+              👋 <strong>MAB Group Automated System Active</strong><br>
+              Connected to <code>aimabgrp.com</code> AI Pipeline. Real-time SOLAS &amp; Life Raft telemetry enabled.
+              <div class="wa-time-meta">09:00 AM • Delivered ✓✓</div>
+            </div>
+            <div class="wa-bubble-sent">
+              Received. Chief Engineer monitoring MV Al-Mabrouk inspection schedule.
+              <div class="wa-time-meta">09:02 AM • Read ✓✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trigger Controls -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div>
+                <div class="panel-title">Omnichannel Dispatch Center</div>
+                <div class="panel-subtitle">Instant WhatsApp webhook &amp; corporate email trigger</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">Select Alert Scenario</label>
+              <select class="form-input-neu" id="waScenarioSelect">
+                <option value="expiry">⚠️ Life Raft HRU Expiry in 12 Days (Urgent Action)</option>
+                <option value="audit_pass">✅ Official SOLAS Audit Passed (Port Qasim Clearance)</option>
+                <option value="erp_sync">🔄 ERP Sync Complete (148,934 Records Reconciled)</option>
+              </select>
+            </div>
+
+            <button class="neu-btn" id="sendWaBtn" style="padding: 14px 20px; justify-content: center; font-size: 0.9rem; font-weight: 800; background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(13, 148, 136, 0.2)); border: 1px solid #25d366;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              Dispatch Simulated WhatsApp Message
+            </button>
+
+            <!-- Corporate Email Dispatch Log -->
+            <div style="background: rgba(255,255,255,0.4); border-radius: 14px; padding: 14px; border: 1px solid var(--glass-border-subtle); margin-top: 8px;">
+              <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Corporate Email Archiving Log</div>
+              <div style="font-size: 0.78rem; display: flex; flex-direction: column; gap: 6px; color: var(--text-main);">
+                <div>✉️ <strong>to: operations@mabgrp.com</strong> — SOLAS Weekly Inspection Digest attached (PDF)</div>
+                <div>✉️ <strong>to: marine.surveyor@portqasim.gov.pk</strong> — Certificate #SOLAS-MAB-884 auto-filed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: MULTI-USER ROLES & AUDIT LOGS -->
+    <div class="dashboard-panel-view" id="tab-security">
+      <div class="grid-2col">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <div class="panel-title">Role-Based Multi-User Access Control</div>
+                <div class="panel-subtitle">Configured for MAB Group operational personnel</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span style="font-weight: 700;">Lead Marine Surveyor</span>
+              <span class="val" style="color: var(--brand-emerald);">Full SOLAS Sign-off</span>
+            </div>
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span style="font-weight: 700;">ERP Logistics Admin</span>
+              <span class="val">Database &amp; Inventory Write</span>
+            </div>
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span style="font-weight: 700;">Port Operations Officer</span>
+              <span class="val">Read-Only Dispatch &amp; Radar</span>
+            </div>
+            <div class="mou-pill-stat" style="justify-content: space-between;">
+              <span style="font-weight: 700;">NeuroGrid AI Daemon</span>
+              <span class="val" style="color: var(--brand-accent);">Automated Verification Agent</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              </div>
+              <div>
+                <div class="panel-title">Cryptographic Integrity Audit Log</div>
+                <div class="panel-subtitle">Immutable compliance records</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-family: var(--font-mono); font-size: 0.76rem; display: flex; flex-direction: column; gap: 8px; color: var(--text-muted);">
+            <div style="padding: 6px 10px; background: rgba(255,255,255,0.4); border-radius: 8px;">
+              <span style="color: var(--brand-accent);">[28-Oct 13:30]</span> Gateway initialized and operational
+            </div>
+            <div style="padding: 6px 10px; background: rgba(255,255,255,0.4); border-radius: 8px;">
+              <span style="color: var(--brand-accent);">[28-Oct 13:31]</span> Central database sync verified with 0 schema drift
+            </div>
+            <div style="padding: 6px 10px; background: rgba(255,255,255,0.4); border-radius: 8px;">
+              <span style="color: var(--brand-accent);">[28-Oct 13:32]</span> Life Raft database synced with 0 discrepancies
+            </div>
+            <div style="padding: 6px 10px; background: rgba(255,255,255,0.4); border-radius: 8px;">
+              <span style="color: var(--brand-accent);">[28-Oct 13:33]</span> Secure TLS 1.3 encrypted channel verified
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>

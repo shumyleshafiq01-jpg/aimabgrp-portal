@@ -1,0 +1,1094 @@
+/* ==========================================================================
+   AIMABGRP.COM - ENTERPRISE ERP AI INTEGRATION & SOLAS MARITIME DASHBOARD
+   Design System: Glassmorphism + Neumorphism + Liquid Glass Fusion
+   Author: NeuroGrid Labs (Pvt.) Ltd. for MAB Group
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Fonts */
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Theme: Pearl White (Default - matches the reference infographic) */
+  --bg-canvas: #f0f4f8;
+  --bg-canvas-subtle: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #94a3b8;
+  
+  /* Brand Teal/Cyan Palette */
+  --brand-teal-deep: #08333c;
+  --brand-teal: #0d5c6b;
+  --brand-cyan: #0891b2;
+  --brand-accent: #0d9488;
+  --brand-aqua: #00f0d4;
+  --brand-rose: #f43f5e;
+  --brand-amber: #f59e0b;
+  --brand-emerald: #10b981;
+  --brand-violet: #8b5cf6;
+
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-hover: rgba(255, 255, 255, 0.72);
+  --glass-bg-active: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-border-subtle: rgba(255, 255, 255, 0.35);
+  --glass-blur: blur(20px);
+  --glass-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+  --glass-shadow-lg: 0 30px 60px -20px rgba(15, 23, 42, 0.12), 0 0 2px 1px rgba(255, 255, 255, 0.95) inset;
+
+  /* Neumorphism Tokens (Soft Tactile Extrusion) */
+  --neu-bg: #e6edf5;
+  --neu-shadow-outset: 7px 7px 16px rgba(166, 180, 200, 0.65), -7px -7px 16px rgba(255, 255, 255, 0.95);
+  --neu-shadow-inset: inset 4px 4px 8px rgba(166, 180, 200, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+  --neu-shadow-pill: 5px 5px 12px rgba(166, 180, 200, 0.55), -5px -5px 12px rgba(255, 255, 255, 0.95);
+  --neu-shadow-pressed: inset 3px 3px 6px rgba(166, 180, 200, 0.6), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+
+  /* Liquid Glass Tokens (Fluid, chromatic, refractive) */
+  --liquid-border-sheen: conic-gradient(from 180deg at 50% 50%, #00f0d4, #0891b2, #ec4899, #8b5cf6, #3b82f6, #00f0d4);
+  --liquid-glow: 0 15px 40px rgba(13, 148, 136, 0.25), 0 0 30px rgba(236, 72, 153, 0.15);
+  --liquid-specular: radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 65%);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Dark Mode: Deep Oceanic Teal (Matches corporate quotation branding)
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --bg-canvas: #041c21;
+  --bg-canvas-subtle: #072a32;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --glass-bg: rgba(7, 42, 50, 0.58);
+  --glass-bg-hover: rgba(13, 78, 90, 0.65);
+  --glass-bg-active: rgba(13, 78, 90, 0.85);
+  --glass-border: rgba(24, 214, 199, 0.28);
+  --glass-border-subtle: rgba(24, 214, 199, 0.15);
+  --glass-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(24, 214, 199, 0.2) inset;
+  --glass-shadow-lg: 0 30px 70px -20px rgba(0, 0, 0, 0.8), 0 0 2px 1px rgba(24, 214, 199, 0.35) inset;
+
+  --neu-bg: #072a32;
+  --neu-shadow-outset: 6px 6px 16px rgba(0, 0, 0, 0.55), -6px -6px 16px rgba(13, 78, 90, 0.4);
+  --neu-shadow-inset: inset 4px 4px 8px rgba(0, 0, 0, 0.65), inset -4px -4px 8px rgba(13, 78, 90, 0.5);
+  --neu-shadow-pill: 5px 5px 14px rgba(0, 0, 0, 0.5), -5px -5px 14px rgba(13, 78, 90, 0.35);
+  --neu-shadow-pressed: inset 3px 3px 6px rgba(0, 0, 0, 0.7), inset -3px -3px 6px rgba(13, 78, 90, 0.5);
+
+  --liquid-glow: 0 20px 50px rgba(24, 214, 199, 0.3), 0 0 40px rgba(139, 92, 246, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Reset & Base Canvas
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   3. Ambient Reactive Background Lighting (Creates depth for glass refraction)
+   -------------------------------------------------------------------------- */
+.ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.65;
+  will-change: transform;
+}
+
+.orb-1 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.45) 0%, rgba(8, 145, 178, 0.1) 70%);
+  top: -120px;
+  left: -80px;
+  animation: floatOrb1 18s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, rgba(139, 92, 246, 0.1) 70%);
+  top: 15%;
+  right: -150px;
+  animation: floatOrb2 22s infinite alternate ease-in-out;
+}
+
+.orb-3 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(0, 240, 212, 0.3) 0%, rgba(13, 92, 107, 0.1) 70%);
+  bottom: -200px;
+  left: 20%;
+  animation: floatOrb3 26s infinite alternate ease-in-out;
+}
+
+@keyframes floatOrb1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(120px, 80px) scale(1.15); }
+  100% { transform: translate(60px, 140px) scale(0.95); }
+}
+
+@keyframes floatOrb2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-140px, 100px) scale(1.2); }
+  100% { transform: translate(-80px, -60px) scale(0.9); }
+}
+
+@keyframes floatOrb3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-80px, -120px) scale(1.1); }
+  100% { transform: translate(100px, -70px) scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   4. App Container & Layout
+   -------------------------------------------------------------------------- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 28px 80px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Top Header & Domain Connection Banner
+   -------------------------------------------------------------------------- */
+.glass-header {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--glass-shadow);
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  transition: var(--transition-smooth);
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-logo-liquid {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(0, 240, 212, 0.4));
+  box-shadow: 0 8px 20px rgba(0, 240, 212, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logoMorph 8s infinite alternate ease-in-out;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes logoMorph {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  100% { border-radius: 50% 60% 40% 60% / 40% 60% 50% 60%; }
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+.brand-partner-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(13, 148, 136, 0.15);
+  color: var(--brand-accent);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Domain Acquisition Status Bar */
+.domain-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-pill);
+  transition: var(--transition-smooth);
+}
+
+.domain-dot-beacon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand-emerald);
+  box-shadow: 0 0 12px var(--brand-emerald);
+  position: relative;
+}
+
+.domain-dot-beacon::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brand-emerald);
+  opacity: 0.7;
+  animation: beaconPulse 2s infinite ease-out;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.domain-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.domain-name-highlight {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--brand-accent);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.domain-meta {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+/* Header Action Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Neumorphic Push Buttons */
+.neu-btn {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-pill);
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  user-select: none;
+}
+
+.neu-btn:hover {
+  transform: translateY(-1px);
+  color: var(--brand-accent);
+}
+
+.neu-btn:active, .neu-btn.active {
+  box-shadow: var(--neu-shadow-pressed);
+  transform: translateY(1px);
+  color: var(--brand-cyan);
+}
+
+.neu-icon-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   6. Operational System Status (Header) & Executive Dashboard Hero
+   -------------------------------------------------------------------------- */
+.system-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-pill);
+  transition: var(--transition-smooth);
+}
+
+.status-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--brand-emerald);
+  box-shadow: 0 0 10px var(--brand-emerald);
+  position: relative;
+}
+
+.status-pulse-dot::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid var(--brand-emerald);
+  opacity: 0.6;
+  animation: beaconPulse 2s infinite ease-out;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Executive Dashboard Hero */
+.dashboard-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 28px 36px;
+  box-shadow: var(--glass-shadow);
+  flex-wrap: wrap;
+}
+
+.dash-hero-content {
+  max-width: 660px;
+}
+
+.dash-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.eyebrow-chip {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(13, 148, 136, 0.15);
+  color: var(--brand-accent);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.eyebrow-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.dash-hero-title {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.dash-hero-title span.gradient-text {
+  background: linear-gradient(135deg, var(--brand-accent) 0%, var(--brand-cyan) 50%, var(--brand-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dash-hero-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.dash-hero-metrics {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-metric-tile {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-pill);
+  border-radius: 20px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 140px;
+  transition: var(--transition-smooth);
+}
+
+.hero-metric-tile:hover {
+  transform: translateY(-2px);
+}
+
+.tile-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.tile-value {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.tile-unit {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.tile-sub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.text-accent { color: var(--brand-accent) !important; }
+.text-emerald { color: var(--brand-emerald) !important; }
+
+
+/* --------------------------------------------------------------------------
+   8. Navigation Tabs (Neumorphic Segment Controller)
+   -------------------------------------------------------------------------- */
+.dashboard-nav-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.neu-tabs-nav {
+  display: flex;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-inset);
+  padding: 6px;
+  border-radius: 40px;
+  gap: 6px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.neu-tab-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+  white-space: nowrap;
+}
+
+.neu-tab-btn:hover {
+  color: var(--text-main);
+}
+
+.neu-tab-btn.active {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-pill);
+  color: var(--brand-accent);
+}
+
+/* --------------------------------------------------------------------------
+   9. Dashboard Panels & Functional Modules
+   -------------------------------------------------------------------------- */
+.dashboard-panel-view {
+  display: none;
+  animation: fadeInPanel 0.4s ease forwards;
+}
+
+.dashboard-panel-view.active {
+  display: block;
+}
+
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Common Grid Systems */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-4kpi {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Glass Panel Card */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 24px 28px;
+  box-shadow: var(--glass-shadow);
+  position: relative;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.panel-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.2), rgba(0, 240, 212, 0.2));
+  color: var(--brand-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.panel-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* KPI Stat Metric Cards */
+.kpi-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border: 1.2px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 18px 22px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: var(--transition-smooth);
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-accent);
+}
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.kpi-value {
+  font-family: var(--font-mono);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.kpi-trend {
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.trend-up { color: var(--brand-emerald); }
+.trend-warning { color: var(--brand-amber); }
+
+/* Streaming Terminal Console (Live ERP Bridge) */
+.terminal-window {
+  background: #06151a;
+  border-radius: 16px;
+  border: 1px solid rgba(24, 214, 199, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 380px;
+}
+
+.terminal-titlebar {
+  background: #09222a;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(24, 214, 199, 0.2);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.terminal-heading {
+  font-size: 0.75rem;
+  color: var(--brand-aqua);
+  font-weight: 600;
+}
+
+.terminal-content {
+  padding: 16px;
+  overflow-y: auto;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #a7f3d0;
+  flex: 1;
+}
+
+.terminal-content p {
+  margin-bottom: 6px;
+}
+
+.term-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.tag-info { background: rgba(8, 145, 178, 0.3); color: #38bdf8; }
+.tag-ok { background: rgba(16, 185, 129, 0.3); color: #34d399; }
+.tag-sync { background: rgba(139, 92, 246, 0.3); color: #c084fc; }
+.tag-warn { background: rgba(245, 158, 11, 0.3); color: #fbbf24; }
+
+/* --------------------------------------------------------------------------
+   10. Module 2: SOLAS & ISO Compliance Auto-Fill Certificate
+   -------------------------------------------------------------------------- */
+.cert-preview-card {
+  background: #ffffff;
+  color: #1e293b;
+  border: 2px solid var(--brand-teal-deep);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cert-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(13, 148, 136, 0.05);
+  pointer-events: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--brand-accent);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.cert-seal {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-teal-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-teal-deep);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cert-grid-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+.cert-field .lbl {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.cert-field .val {
+  font-weight: 700;
+  color: var(--brand-teal-deep);
+}
+
+.cert-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  font-size: 0.82rem;
+}
+
+.check-icon-pass {
+  color: var(--brand-emerald);
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   11. Module 3: Life Raft Fleet Radar Table
+   -------------------------------------------------------------------------- */
+.radar-table-wrapper {
+  overflow-x: auto;
+}
+
+.radar-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.radar-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1.5px solid var(--glass-border);
+}
+
+.radar-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--glass-border-subtle);
+  vertical-align: middle;
+}
+
+.radar-table tr:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-status.safe {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--brand-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-status.amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--brand-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-status.urgent {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--brand-rose);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   12. Module 4: Omnichannel Alert AI (WhatsApp Simulator)
+   -------------------------------------------------------------------------- */
+.whatsapp-phone-mockup {
+  background: #ffffff;
+  border: 8px solid #1e293b;
+  border-radius: 36px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wa-top-header {
+  background: #075e54;
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.wa-contact-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.wa-contact-status {
+  font-size: 0.68rem;
+  color: #d1fae5;
+}
+
+.wa-chat-body {
+  background: #e5ddd5;
+  background-image: radial-gradient(#d4cbbe 1px, transparent 1px);
+  background-size: 16px 16px;
+  padding: 16px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wa-bubble-received {
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 0 16px 16px 16px;
+  font-size: 0.8rem;
+  color: #111827;
+  max-width: 85%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  position: relative;
+  line-height: 1.45;
+}
+
+.wa-bubble-sent {
+  background: #dcf8c6;
+  padding: 10px 14px;
+  border-radius: 16px 0 16px 16px;
+  font-size: 0.8rem;
+  color: #111827;
+  max-width: 85%;
+  align-self: flex-end;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  line-height: 1.45;
+}
+
+.wa-time-meta {
+  font-size: 0.62rem;
+  color: #6b7280;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   13. Form Controls & Modal Systems
+   -------------------------------------------------------------------------- */
+.form-input-neu {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 20px;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-inset);
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text-main);
+  transition: var(--transition-smooth);
+}
+
+.form-input-neu:focus {
+  box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.7), inset -2px -2px 5px #ffffff, 0 0 0 2px var(--brand-accent);
+}
+
+/* --------------------------------------------------------------------------
+   14. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .aesthetics-trio-grid {
+    grid-template-columns: 1fr;
+  }
+  .milestones-stepper-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+  .grid-4kpi {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .glass-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .milestones-stepper-grid {
+    grid-template-columns: 1fr;
+  }
+  .grid-4kpi {
+    grid-template-columns: 1fr;
+  }
+  .hero-title-area h1 {
+    font-size: 1.8rem;
+  }
+}
