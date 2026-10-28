@@ -1,5 +1,10 @@
 {
   "buildCommand": null,
   "outputDirectory": ".",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/styles/(.*)", "destination": "/styles/$1" },
+    { "source": "/scripts/(.*)", "destination": "/scripts/$1" }
+  ]
 }
