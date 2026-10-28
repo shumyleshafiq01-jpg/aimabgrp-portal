@@ -2,10 +2,9 @@
   "name": "aimabgrp-portal",
   "version": "1.0.0",
   "description": "MAB Group Enterprise ERP AI Integration & SOLAS Maritime Automation Dashboard",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "mab-group",
