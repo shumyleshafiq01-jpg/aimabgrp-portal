@@ -185,7 +185,7 @@ Please submit your most competitive commercial quotation for the following statu
 5. Inflatable Life Rafts: 2x 25-person SOLAS Pack A annual servicing & hydrostatic release replacement.
 
 Copy of ClassNK Cargo Ship Safety Equipment Certificate attached.
-Awaiting your dual quotation (Standard 30 Days Credit vs Cash on Board).
+Awaiting your quotation (Standard 30 Days Credit vs Cash on Board).
 
 Best regards,
 Fleet Technical Superintendent
@@ -1034,5 +1034,5 @@ Operations Desk, Gulf Maritime Shipping Agents`
 
   // Initial stream log
   appendTerminalLog('MAB Group Enterprise Maritime Operations Gateway online.', 'ok');
-  appendTerminalLog('6 Operational Modules initialized: RFQ Gateway, SOLAS Classifier, Dual Pricing, IACS LB Broker, Customs Boarding, Field Inspection.', 'info');
+  appendTerminalLog('6 Operational Modules initialized: RFQ Gateway, SOLAS Classifier, Quotation Engine, IACS LB Broker, Customs Boarding, Field Inspection.', 'info');
 });
