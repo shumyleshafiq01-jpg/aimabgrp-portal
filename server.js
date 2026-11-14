@@ -1,6 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
+const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = __dirname;
@@ -46,6 +48,101 @@ const server = http.createServer((req, res) => {
 
     req.on('close', () => {
       clearInterval(interval);
+    });
+    return;
+  }
+
+  // Executive Maritime Webmail API Bridge
+  if (req.url.startsWith('/api/mail')) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+    const query = parsedUrl.query;
+
+    let action = query.action;
+    if (!action) {
+      if (pathname.includes('/folders')) action = 'folders';
+      else if (pathname.includes('/list')) action = 'list';
+      else if (pathname.includes('/read')) action = 'read';
+      else if (pathname.includes('/attachment')) action = 'attachment';
+      else if (pathname.includes('/send') || pathname.includes('/reply')) action = 'send';
+      else action = 'folders';
+    }
+
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          const act = action || payload.action || 'send';
+          const py = spawn('python', [path.join(__dirname, 'mail_bridge.py'), act], {
+            cwd: __dirname
+          });
+
+          let stdout = '';
+          let stderr = '';
+          py.stdout.on('data', d => { stdout += d; });
+          py.stderr.on('data', d => { stderr += d; });
+
+          py.on('close', code => {
+            res.writeHead(code === 0 ? 200 : 500, { 'Content-Type': 'application/json' });
+            if (stdout.trim()) {
+              res.end(stdout);
+            } else {
+              res.end(JSON.stringify({ success: false, error: stderr || `Process failed with exit code ${code}` }));
+            }
+          });
+
+          py.stdin.write(JSON.stringify(payload));
+          py.stdin.end();
+        } catch (err) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'Malformed JSON payload' }));
+        }
+      });
+      return;
+    }
+
+    // GET requests
+    const args = [path.join(__dirname, 'mail_bridge.py'), action];
+    if (action === 'list') {
+      if (query.folder) args.push('--folder', query.folder);
+      if (query.page) args.push('--page', query.page);
+      if (query.limit) args.push('--limit', query.limit);
+      if (query.search) args.push('--search', query.search);
+    } else if (action === 'read') {
+      if (query.folder) args.push('--folder', query.folder);
+      if (query.id) args.push('--id', query.id);
+    } else if (action === 'attachment') {
+      if (query.folder) args.push('--folder', query.folder);
+      if (query.id) args.push('--id', query.id);
+      if (query.index) args.push('--index', query.index);
+      if (query.filename) args.push('--filename', query.filename);
+    }
+
+    const py = spawn('python', args, { cwd: __dirname });
+    let stdout = '';
+    let stderr = '';
+    py.stdout.on('data', d => { stdout += d; });
+    py.stderr.on('data', d => { stderr += d; });
+
+    py.on('close', code => {
+      res.writeHead(code === 0 ? 200 : 500, { 'Content-Type': 'application/json' });
+      if (stdout.trim()) {
+        res.end(stdout);
+      } else {
+        res.end(JSON.stringify({ success: false, error: stderr || `Process failed with exit code ${code}` }));
+      }
     });
     return;
   }

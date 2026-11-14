@@ -1032,6 +1032,840 @@ Operations Desk, Gulf Maritime Shipping Agents`
     });
   }
 
+  // ========================================================================
+  // 8. EXECUTIVE MARITIME WEBMAIL & COMMUNICATION SUITE (KUMAIL RIZVI GATEWAY)
+  // ========================================================================
+  const mailState = {
+    folders: [],
+    currentFolder: 'INBOX',
+    currentPage: 1,
+    limit: 25,
+    totalPages: 1,
+    totalMessages: 0,
+    currentFilter: 'all', // 'all' | 'unread' | 'attachments'
+    searchQuery: '',
+    messages: [],
+    selectedId: null,
+    selectedMessage: null,
+    stagedAttachments: [],
+    replyContext: null
+  };
+
+  const navMailBadge = document.getElementById('navMailBadge');
+  const mailFoldersNav = document.getElementById('mailFoldersNav');
+  const mailCurrentFolderTitle = document.getElementById('mailCurrentFolderTitle');
+  const mailFolderMeta = document.getElementById('mailFolderMeta');
+  const mailItemsContainer = document.getElementById('mailItemsContainer');
+  const mailPrevPageBtn = document.getElementById('mailPrevPageBtn');
+  const mailNextPageBtn = document.getElementById('mailNextPageBtn');
+  const mailPageIndicator = document.getElementById('mailPageIndicator');
+  const mailSearchInput = document.getElementById('mailSearchInput');
+  const mailSearchClearBtn = document.getElementById('mailSearchClearBtn');
+  const mailRefreshBtn = document.getElementById('mailRefreshBtn');
+  const mailComposeBtn = document.getElementById('mailComposeBtn');
+
+  const mailEmptyState = document.getElementById('mailEmptyState');
+  const mailActiveView = document.getElementById('mailActiveView');
+  const mailReplyBtn = document.getElementById('mailReplyBtn');
+  const mailReplyAllBtn = document.getElementById('mailReplyAllBtn');
+  const mailForwardBtn = document.getElementById('mailForwardBtn');
+  const mailConvertToRfqBtn = document.getElementById('mailConvertToRfqBtn');
+  const mailPrintBtn = document.getElementById('mailPrintBtn');
+  const mailViewSubject = document.getElementById('mailViewSubject');
+  const mailViewAvatar = document.getElementById('mailViewAvatar');
+  const mailViewFromName = document.getElementById('mailViewFromName');
+  const mailViewFromEmail = document.getElementById('mailViewFromEmail');
+  const mailViewTo = document.getElementById('mailViewTo');
+  const mailViewCc = document.getElementById('mailViewCc');
+  const mailViewCcRow = document.getElementById('mailViewCcRow');
+  const mailViewBcc = document.getElementById('mailViewBcc');
+  const mailViewBccRow = document.getElementById('mailViewBccRow');
+  const mailViewDate = document.getElementById('mailViewDate');
+  const mailViewAttachmentsSection = document.getElementById('mailViewAttachmentsSection');
+  const mailViewAttachmentsList = document.getElementById('mailViewAttachmentsList');
+  const mailAttachmentsCount = document.getElementById('mailAttachmentsCount');
+  const btnViewHtml = document.getElementById('btnViewHtml');
+  const btnViewText = document.getElementById('btnViewText');
+  const mailHtmlBodyContainer = document.getElementById('mailHtmlBodyContainer');
+  const mailTextBodyContainer = document.getElementById('mailTextBodyContainer');
+
+  const mailComposeModal = document.getElementById('mailComposeModal');
+  const closeComposeModal = document.getElementById('closeComposeModal');
+  const composeModalTitle = document.getElementById('composeModalTitle');
+  const composeTo = document.getElementById('composeTo');
+  const composeCc = document.getElementById('composeCc');
+  const composeBcc = document.getElementById('composeBcc');
+  const composeCcRow = document.getElementById('composeCcRow');
+  const composeBccRow = document.getElementById('composeBccRow');
+  const toggleCcBtn = document.getElementById('toggleCcBtn');
+  const toggleBccBtn = document.getElementById('toggleBccBtn');
+  const composeSubject = document.getElementById('composeSubject');
+  const composeBodyText = document.getElementById('composeBodyText');
+  const composeFileInput = document.getElementById('composeFileInput');
+  const composeAddFileBtn = document.getElementById('composeAddFileBtn');
+  const composeAttachQuotationBtn = document.getElementById('composeAttachQuotationBtn');
+  const composeStagedAttachmentsList = document.getElementById('composeStagedAttachmentsList');
+  const composeDiscardBtn = document.getElementById('composeDiscardBtn');
+  const composeSendBtn = document.getElementById('composeSendBtn');
+  const composeSendBtnText = document.getElementById('composeSendBtnText');
+
+  function showMailToast(msg) {
+    let toast = document.getElementById('mailToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'mailToast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #0f172a;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+        z-index: 100000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        transform: translateY(20px);
+        opacity: 0;
+        border-left: 4px solid #0d9488;
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span style="color:#00f0d4;">⚓</span><span>${msg}</span>`;
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.transform = 'translateY(20px)';
+      toast.style.opacity = '0';
+    }, 3500);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  function formatMailDate(dateStr) {
+    if (!dateStr) return '';
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr.split(' +')[0].split(' -')[0];
+      const now = new Date();
+      const isToday = d.toDateString() === now.toDateString();
+      if (isToday) {
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+      return d.toLocaleDateString([], { day: 'numeric', month: 'short' });
+    } catch (e) {
+      return dateStr;
+    }
+  }
+
+  async function loadMailFolders() {
+    try {
+      const res = await fetch('/api/mail?action=folders');
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Failed to load folders');
+
+      mailState.folders = data.folders || [];
+
+      data.folders.forEach(f => {
+        const idSafe = f.id.replace(/\./g, '-');
+        const badgeEl = document.getElementById(`badge-${idSafe}`) || document.getElementById(`badge-${f.id}`);
+        if (badgeEl) {
+          if (f.id === 'INBOX') {
+            badgeEl.textContent = f.unreadCount > 0 ? f.unreadCount : f.totalCount;
+            badgeEl.className = f.unreadCount > 0 ? 'folder-btn-badge' : 'folder-btn-count';
+            if (navMailBadge) {
+              navMailBadge.textContent = f.unreadCount || 0;
+              navMailBadge.style.display = f.unreadCount > 0 ? 'inline-flex' : 'none';
+            }
+          } else {
+            badgeEl.textContent = f.totalCount || 0;
+          }
+        }
+      });
+    } catch (err) {
+      console.warn('Mail folders fetch notice:', err);
+    }
+  }
+
+  async function loadMailList(page = 1) {
+    mailState.currentPage = page;
+    if (mailItemsContainer) {
+      mailItemsContainer.innerHTML = `
+        <div class="mail-loading-state">
+          <div class="mail-spinner"></div>
+          <p>Syncing ${mailState.currentFolder}...</p>
+        </div>
+      `;
+    }
+
+    try {
+      let queryParams = `action=list&folder=${encodeURIComponent(mailState.currentFolder)}&page=${page}&limit=${mailState.limit}`;
+      if (mailState.searchQuery) {
+        queryParams += `&search=${encodeURIComponent(mailState.searchQuery)}`;
+      }
+
+      const res = await fetch(`/api/mail?${queryParams}`);
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.error || 'Failed to fetch messages');
+
+      mailState.messages = data.messages || [];
+      mailState.totalPages = data.totalPages || 1;
+      mailState.totalMessages = data.total || 0;
+
+      if (mailFolderMeta) {
+        mailFolderMeta.textContent = `${data.total || 0} messages total (page ${page} of ${mailState.totalPages || 1})`;
+      }
+
+      if (mailPageIndicator) {
+        mailPageIndicator.textContent = `Page ${page} of ${mailState.totalPages || 1}`;
+      }
+      if (mailPrevPageBtn) mailPrevPageBtn.disabled = (page <= 1);
+      if (mailNextPageBtn) mailNextPageBtn.disabled = (page >= mailState.totalPages);
+
+      renderMailList();
+    } catch (err) {
+      if (mailItemsContainer) {
+        mailItemsContainer.innerHTML = `
+          <div class="mail-loading-state" style="color:var(--brand-rose);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <p>Failed to load emails: ${err.message}</p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  function renderMailList() {
+    if (!mailItemsContainer) return;
+
+    let filtered = mailState.messages;
+    if (mailState.currentFilter === 'unread') {
+      filtered = filtered.filter(m => !m.isRead);
+    } else if (mailState.currentFilter === 'attachments') {
+      filtered = filtered.filter(m => m.hasAttachment);
+    }
+
+    if (filtered.length === 0) {
+      mailItemsContainer.innerHTML = `
+        <div class="mail-loading-state">
+          <p>No messages match the current filter in ${mailState.currentFolder}.</p>
+        </div>
+      `;
+      return;
+    }
+
+    mailItemsContainer.innerHTML = filtered.map(msg => {
+      const isSelected = String(msg.id) === String(mailState.selectedId);
+      const unreadClass = msg.isRead ? '' : 'unread';
+      const activeClass = isSelected ? 'active' : '';
+
+      return `
+        <div class="mail-item-card ${unreadClass} ${activeClass}" data-id="${msg.id}">
+          <div class="mail-item-top">
+            <span class="mail-item-sender" title="${escapeHtml(msg.from)}">${escapeHtml(msg.fromName || msg.fromEmail || 'Unknown')}</span>
+            <span class="mail-item-date">${formatMailDate(msg.date)}</span>
+          </div>
+          <div class="mail-item-subject" title="${escapeHtml(msg.subject)}">${escapeHtml(msg.subject)}</div>
+          <div class="mail-item-bottom">
+            <span>${escapeHtml(msg.fromEmail || '')}</span>
+            ${msg.hasAttachment ? `
+              <span class="mail-clip-tag">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                Files
+              </span>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    mailItemsContainer.querySelectorAll('.mail-item-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        openMailMessage(id);
+      });
+    });
+  }
+
+  async function openMailMessage(id) {
+    mailState.selectedId = id;
+    playSound('click');
+
+    document.querySelectorAll('.mail-item-card').forEach(c => {
+      if (c.getAttribute('data-id') === String(id)) {
+        c.classList.add('active');
+        c.classList.remove('unread');
+      } else {
+        c.classList.remove('active');
+      }
+    });
+
+    if (mailEmptyState) mailEmptyState.style.display = 'none';
+    if (mailActiveView) {
+      mailActiveView.style.display = 'flex';
+      mailActiveView.style.flexDirection = 'column';
+    }
+
+    if (mailViewSubject) mailViewSubject.textContent = 'Opening message...';
+    if (mailHtmlBodyContainer) mailHtmlBodyContainer.innerHTML = '<div class="mail-spinner" style="margin:40px auto;"></div>';
+    if (mailTextBodyContainer) mailTextBodyContainer.textContent = '';
+    if (mailViewAttachmentsSection) mailViewAttachmentsSection.style.display = 'none';
+
+    try {
+      const res = await fetch(`/api/mail?action=read&folder=${encodeURIComponent(mailState.currentFolder)}&id=${encodeURIComponent(id)}`);
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.error || 'Failed to read message');
+      mailState.selectedMessage = data;
+
+      if (mailViewSubject) mailViewSubject.textContent = data.subject || '(No Subject)';
+      if (mailViewFromName) mailViewFromName.textContent = data.fromName || 'Unknown';
+      if (mailViewFromEmail) mailViewFromEmail.textContent = `<${data.fromEmail || ''}>`;
+      if (mailViewAvatar) {
+        const initials = (data.fromName || data.fromEmail || 'M')
+          .split(' ')
+          .map(n => n[0])
+          .slice(0, 2)
+          .join('')
+          .toUpperCase();
+        mailViewAvatar.textContent = initials || 'M';
+      }
+      if (mailViewDate) mailViewDate.textContent = data.date || '';
+      if (mailViewTo) mailViewTo.textContent = data.to || '';
+
+      if (data.cc) {
+        if (mailViewCcRow) mailViewCcRow.style.display = 'block';
+        if (mailViewCc) mailViewCc.textContent = data.cc;
+      } else {
+        if (mailViewCcRow) mailViewCcRow.style.display = 'none';
+      }
+
+      if (data.bcc) {
+        if (mailViewBccRow) mailViewBccRow.style.display = 'block';
+        if (mailViewBcc) mailViewBcc.textContent = data.bcc;
+      } else {
+        if (mailViewBccRow) mailViewBccRow.style.display = 'none';
+      }
+
+      // Attachments list
+      if (data.attachments && data.attachments.length > 0) {
+        if (mailViewAttachmentsSection) mailViewAttachmentsSection.style.display = 'block';
+        if (mailAttachmentsCount) mailAttachmentsCount.textContent = data.attachments.length;
+        if (mailViewAttachmentsList) {
+          mailViewAttachmentsList.innerHTML = data.attachments.map(att => `
+            <div class="attachment-download-chip" data-index="${att.partIndex}" data-name="${escapeHtml(att.filename)}" title="Click to Download ${escapeHtml(att.filename)}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span class="attachment-chip-name">${escapeHtml(att.filename)}</span>
+              <span class="attachment-chip-size">(${att.sizeFormatted})</span>
+            </div>
+          `).join('');
+
+          mailViewAttachmentsList.querySelectorAll('.attachment-download-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+              const partIdx = chip.getAttribute('data-index');
+              const fn = chip.getAttribute('data-name');
+              downloadMailAttachment(mailState.currentFolder, id, partIdx, fn);
+            });
+          });
+        }
+      } else {
+        if (mailViewAttachmentsSection) mailViewAttachmentsSection.style.display = 'none';
+      }
+
+      // Body rendering
+      if (data.bodyHtml) {
+        if (mailHtmlBodyContainer) {
+          mailHtmlBodyContainer.innerHTML = data.bodyHtml;
+          mailHtmlBodyContainer.querySelectorAll('a').forEach(a => a.target = '_blank');
+        }
+      } else {
+        if (mailHtmlBodyContainer) {
+          mailHtmlBodyContainer.innerHTML = `<div style="white-space:pre-wrap;font-family:var(--font-sans);">${escapeHtml(data.bodyText || '(No content)')}</div>`;
+        }
+      }
+
+      if (mailTextBodyContainer) {
+        mailTextBodyContainer.textContent = data.bodyText || '(No plain text content)';
+      }
+
+      if (btnViewHtml && btnViewText) {
+        btnViewHtml.classList.add('active');
+        btnViewText.classList.remove('active');
+        if (mailHtmlBodyContainer) mailHtmlBodyContainer.style.display = 'block';
+        if (mailTextBodyContainer) mailTextBodyContainer.style.display = 'none';
+      }
+
+    } catch (err) {
+      if (mailViewSubject) mailViewSubject.textContent = 'Error opening message';
+      if (mailHtmlBodyContainer) mailHtmlBodyContainer.innerHTML = `<p style="color:var(--brand-rose);">${err.message}</p>`;
+    }
+  }
+
+  async function downloadMailAttachment(folder, msgId, partIndex, filename) {
+    playSound('pop');
+    showMailToast(`Downloading ${filename}...`);
+    try {
+      const res = await fetch(`/api/mail?action=attachment&folder=${encodeURIComponent(folder)}&id=${encodeURIComponent(msgId)}&index=${partIndex}&filename=${encodeURIComponent(filename)}`);
+      const data = await res.json();
+      if (!data.success || !data.dataBase64) throw new Error(data.error || 'Failed to fetch attachment binary');
+
+      const byteChars = atob(data.dataBase64);
+      const byteNums = new Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) {
+        byteNums[i] = byteChars.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNums);
+      const blob = new Blob([byteArray], { type: data.contentType || 'application/octet-stream' });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      playSound('success');
+      showMailToast(`Downloaded ${filename} successfully!`);
+    } catch (err) {
+      alert(`Download Error: ${err.message}`);
+    }
+  }
+
+  function renderStagedAttachments() {
+    if (!composeStagedAttachmentsList) return;
+    if (mailState.stagedAttachments.length === 0) {
+      composeStagedAttachmentsList.innerHTML = '<span style="font-size:11px;color:var(--text-dim);">No attachments staged yet.</span>';
+      return;
+    }
+
+    composeStagedAttachmentsList.innerHTML = mailState.stagedAttachments.map((att, idx) => `
+      <div class="staged-att-chip">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+        <span>${escapeHtml(att.filename)}</span>
+        <button type="button" class="remove-att-btn" data-idx="${idx}" title="Remove attachment">✕</button>
+      </div>
+    `).join('');
+
+    composeStagedAttachmentsList.querySelectorAll('.remove-att-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-idx'), 10);
+        mailState.stagedAttachments.splice(idx, 1);
+        renderStagedAttachments();
+      });
+    });
+  }
+
+  function openComposeModal(mode = 'new', isReplyAll = false) {
+    playSound('pop');
+    mailState.stagedAttachments = [];
+    renderStagedAttachments();
+
+    if (mode === 'new') {
+      if (composeModalTitle) composeModalTitle.textContent = 'Compose Maritime Dispatch';
+      if (composeTo) composeTo.value = '';
+      if (composeCc) composeCc.value = '';
+      if (composeBcc) composeBcc.value = '';
+      if (composeSubject) composeSubject.value = '';
+      if (composeBodyText) composeBodyText.value = '';
+      if (composeCcRow) composeCcRow.style.display = 'none';
+      if (composeBccRow) composeBccRow.style.display = 'none';
+      mailState.replyContext = null;
+    } else if (mode === 'reply') {
+      const msg = mailState.selectedMessage;
+      if (!msg) return;
+
+      const replyToAddress = msg.replyTo || msg.fromEmail;
+      if (composeTo) composeTo.value = replyToAddress;
+
+      if (isReplyAll) {
+        if (composeModalTitle) composeModalTitle.textContent = `Reply All: ${msg.subject}`;
+        let allCc = [];
+        if (msg.cc) allCc.push(msg.cc);
+        if (msg.to && !msg.to.includes(replyToAddress)) allCc.push(msg.to);
+        const cleanedCc = allCc.join(', ').split(',')
+          .map(e => e.trim())
+          .filter(e => e && !e.toLowerCase().includes('kumail.syed@mabgrp.com'))
+          .join(', ');
+
+        if (composeCc) composeCc.value = cleanedCc;
+        if (composeCcRow) composeCcRow.style.display = cleanedCc ? 'flex' : 'none';
+      } else {
+        if (composeModalTitle) composeModalTitle.textContent = `Reply: ${msg.subject}`;
+        if (composeCc) composeCc.value = '';
+        if (composeCcRow) composeCcRow.style.display = 'none';
+      }
+
+      if (composeBcc) composeBcc.value = '';
+      if (composeBccRow) composeBccRow.style.display = 'none';
+
+      const cleanSubj = msg.subject.toLowerCase().startsWith('re:') ? msg.subject : `Re: ${msg.subject}`;
+      if (composeSubject) composeSubject.value = cleanSubj;
+
+      const quotedText = (msg.bodyText || '').split('\n').map(l => `> ${l}`).join('\n');
+      const intro = `\n\n\n--- Original Message ---\nFrom: ${msg.from}\nDate: ${msg.date}\nTo: ${msg.to}\nSubject: ${msg.subject}\n\n${quotedText}`;
+      if (composeBodyText) {
+        composeBodyText.value = intro;
+        composeBodyText.focus();
+        composeBodyText.setSelectionRange(0, 0);
+      }
+
+      mailState.replyContext = {
+        inReplyTo: msg.messageIdHeader,
+        references: msg.messageIdHeader
+      };
+    } else if (mode === 'forward') {
+      const msg = mailState.selectedMessage;
+      if (!msg) return;
+      if (composeModalTitle) composeModalTitle.textContent = `Forward: ${msg.subject}`;
+      if (composeTo) composeTo.value = '';
+      if (composeCc) composeCc.value = '';
+      if (composeBcc) composeBcc.value = '';
+      const cleanSubj = msg.subject.toLowerCase().startsWith('fwd:') ? msg.subject : `Fwd: ${msg.subject}`;
+      if (composeSubject) composeSubject.value = cleanSubj;
+
+      const quotedText = (msg.bodyText || '').split('\n').map(l => `> ${l}`).join('\n');
+      const intro = `\n\n\n--- Forwarded Message ---\nFrom: ${msg.from}\nDate: ${msg.date}\nTo: ${msg.to}\nSubject: ${msg.subject}\n\n${quotedText}`;
+      if (composeBodyText) composeBodyText.value = intro;
+      mailState.replyContext = null;
+    }
+
+    if (mailComposeModal) mailComposeModal.style.display = 'flex';
+  }
+
+  async function dispatchMail() {
+    const to = composeTo ? composeTo.value.trim() : '';
+    const subject = composeSubject ? composeSubject.value.trim() : '';
+    const bodyText = composeBodyText ? composeBodyText.value : '';
+    const cc = composeCc ? composeCc.value.trim() : '';
+    const bcc = composeBcc ? composeBcc.value.trim() : '';
+
+    if (!to) {
+      alert('Please specify at least one recipient email address.');
+      if (composeTo) composeTo.focus();
+      return;
+    }
+
+    if (composeSendBtn) composeSendBtn.disabled = true;
+    if (composeSendBtnText) composeSendBtnText.textContent = 'Dispatching via SMTP...';
+
+    const payload = {
+      action: 'send',
+      to,
+      cc,
+      bcc,
+      subject: subject || '(No Subject)',
+      bodyText,
+      attachments: mailState.stagedAttachments,
+      inReplyTo: mailState.replyContext ? mailState.replyContext.inReplyTo : null,
+      references: mailState.replyContext ? mailState.replyContext.references : null
+    };
+
+    try {
+      const res = await fetch('/api/mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Failed to dispatch email');
+
+      playSound('success');
+      showMailToast('Maritime dispatch sent successfully!');
+      if (mailComposeModal) mailComposeModal.style.display = 'none';
+
+      loadMailFolders();
+      if (mailState.currentFolder === 'INBOX.Sent') {
+        loadMailList(1);
+      }
+    } catch (err) {
+      alert(`Send Error: ${err.message}`);
+    } finally {
+      if (composeSendBtn) composeSendBtn.disabled = false;
+      if (composeSendBtnText) composeSendBtnText.textContent = 'Send Dispatch';
+    }
+  }
+
+  // Bind Webmail Event Listeners
+  if (mailFoldersNav) {
+    mailFoldersNav.querySelectorAll('.mail-folder-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        playSound('click');
+        mailFoldersNav.querySelectorAll('.mail-folder-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const folder = btn.getAttribute('data-folder');
+        mailState.currentFolder = folder;
+        if (mailCurrentFolderTitle) {
+          const lbl = btn.querySelector('.folder-btn-label');
+          mailCurrentFolderTitle.textContent = lbl ? lbl.textContent : folder;
+        }
+
+        // Reset search
+        mailState.searchQuery = '';
+        if (mailSearchInput) mailSearchInput.value = '';
+        if (mailSearchClearBtn) mailSearchClearBtn.style.display = 'none';
+
+        loadMailList(1);
+      });
+    });
+  }
+
+  // Filter tabs (All, Unread, Attachments)
+  document.querySelectorAll('.mail-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      playSound('click');
+      document.querySelectorAll('.mail-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mailState.currentFilter = btn.getAttribute('data-filter');
+      renderMailList();
+    });
+  });
+
+  // Search
+  if (mailSearchInput) {
+    mailSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        mailState.searchQuery = mailSearchInput.value.trim();
+        if (mailSearchClearBtn) {
+          mailSearchClearBtn.style.display = mailState.searchQuery ? 'block' : 'none';
+        }
+        loadMailList(1);
+      }
+    });
+  }
+
+  if (mailSearchClearBtn) {
+    mailSearchClearBtn.addEventListener('click', () => {
+      mailSearchInput.value = '';
+      mailState.searchQuery = '';
+      mailSearchClearBtn.style.display = 'none';
+      loadMailList(1);
+    });
+  }
+
+  if (mailRefreshBtn) {
+    mailRefreshBtn.addEventListener('click', () => {
+      playSound('pop');
+      showMailToast('Refreshing mailbox from mail.mabgrp.com...');
+      loadMailFolders();
+      loadMailList(mailState.currentPage);
+    });
+  }
+
+  if (mailPrevPageBtn) {
+    mailPrevPageBtn.addEventListener('click', () => {
+      if (mailState.currentPage > 1) {
+        playSound('click');
+        loadMailList(mailState.currentPage - 1);
+      }
+    });
+  }
+
+  if (mailNextPageBtn) {
+    mailNextPageBtn.addEventListener('click', () => {
+      if (mailState.currentPage < mailState.totalPages) {
+        playSound('click');
+        loadMailList(mailState.currentPage + 1);
+      }
+    });
+  }
+
+  // Body view toggle (Formatted vs Raw)
+  if (btnViewHtml && btnViewText) {
+    btnViewHtml.addEventListener('click', () => {
+      btnViewHtml.classList.add('active');
+      btnViewText.classList.remove('active');
+      if (mailHtmlBodyContainer) mailHtmlBodyContainer.style.display = 'block';
+      if (mailTextBodyContainer) mailTextBodyContainer.style.display = 'none';
+    });
+    btnViewText.addEventListener('click', () => {
+      btnViewText.classList.add('active');
+      btnViewHtml.classList.remove('active');
+      if (mailHtmlBodyContainer) mailHtmlBodyContainer.style.display = 'none';
+      if (mailTextBodyContainer) mailTextBodyContainer.style.display = 'block';
+    });
+  }
+
+  // Compose Buttons
+  if (mailComposeBtn) {
+    mailComposeBtn.addEventListener('click', () => openComposeModal('new'));
+  }
+  if (mailReplyBtn) {
+    mailReplyBtn.addEventListener('click', () => openComposeModal('reply', false));
+  }
+  if (mailReplyAllBtn) {
+    mailReplyAllBtn.addEventListener('click', () => openComposeModal('reply', true));
+  }
+  if (mailForwardBtn) {
+    mailForwardBtn.addEventListener('click', () => openComposeModal('forward'));
+  }
+  if (mailPrintBtn) {
+    mailPrintBtn.addEventListener('click', () => window.print());
+  }
+
+  // Modal controls
+  if (closeComposeModal) {
+    closeComposeModal.addEventListener('click', () => {
+      if (mailComposeModal) mailComposeModal.style.display = 'none';
+    });
+  }
+  if (composeDiscardBtn) {
+    composeDiscardBtn.addEventListener('click', () => {
+      if (confirm('Discard this draft dispatch?')) {
+        if (mailComposeModal) mailComposeModal.style.display = 'none';
+      }
+    });
+  }
+  if (composeSendBtn) {
+    composeSendBtn.addEventListener('click', dispatchMail);
+  }
+
+  // Cc & Bcc toggles
+  if (toggleCcBtn && composeCcRow) {
+    toggleCcBtn.addEventListener('click', () => {
+      composeCcRow.style.display = composeCcRow.style.display === 'none' ? 'flex' : 'none';
+      if (composeCcRow.style.display === 'flex' && composeCc) composeCc.focus();
+    });
+  }
+  if (toggleBccBtn && composeBccRow) {
+    toggleBccBtn.addEventListener('click', () => {
+      composeBccRow.style.display = composeBccRow.style.display === 'none' ? 'flex' : 'none';
+      if (composeBccRow.style.display === 'flex' && composeBcc) composeBcc.focus();
+    });
+  }
+
+  // Contact quick-add pills in modal
+  document.querySelectorAll('.contact-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      playSound('pop');
+      const email = pill.getAttribute('data-email');
+      if (composeTo) {
+        const cur = composeTo.value.trim();
+        if (!cur) {
+          composeTo.value = email;
+        } else if (!cur.includes(email)) {
+          composeTo.value = `${cur}, ${email}`;
+        }
+      }
+    });
+  });
+
+  // Attach file from local computer
+  if (composeAddFileBtn && composeFileInput) {
+    composeAddFileBtn.addEventListener('click', () => composeFileInput.click());
+    composeFileInput.addEventListener('change', () => {
+      const files = composeFileInput.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const b64 = e.target.result.split(',')[1];
+          mailState.stagedAttachments.push({
+            filename: file.name,
+            size: file.size,
+            contentType: file.type || 'application/octet-stream',
+            dataBase64: b64
+          });
+          renderStagedAttachments();
+        };
+        reader.readAsDataURL(file);
+      });
+      composeFileInput.value = '';
+    });
+  }
+
+  // 1-Click Attach Generated MAB Quotation
+  if (composeAttachQuotationBtn) {
+    composeAttachQuotationBtn.addEventListener('click', () => {
+      playSound('pop');
+      const quoteRef = `MAB-QT-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const quoteContent = `MAMUN ALI BUMASUK (PVT) LTD.
+EXCELLENCE IN MARINE SAFETY SERVICES SINCE 1980
+============================================================
+COMMERCIAL MARITIME QUOTATION & STATUTORY CERTIFICATION
+Quotation Reference: ${quoteRef}
+Date: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+Vessel: MV AL-MABROUK | IMO: 9283712 | Port: Karachi West Wharf
+
+STATUTORY SCOPE OF WORK:
+1. Annual SOLAS LifeRaft Inspection & Pressure Proof Test (25-Man throw-overboard)
+2. Hydrostatic Release Unit (HRU) Certification (SOLAS Ch. III / Reg 20)
+3. EEBD & SCBA Cylinder Hydro-testing & Breathing Air Refill (200/300 Bar)
+4. Immersion Suit & Pyrotechnics Expiry Compliance Audit
+
+Total Commercial Value: USD 4,850.00 (Net C&F / Port Delivery)
+Payment Terms: 30 Days IACS Class Verified Clearance
+Validation: 30 Days from date of issue
+Classification: IACS Class Approved Marine Workshop
+============================================================
+Generated via aimabgrp.com ERP AI Gateway`;
+
+      const b64 = btoa(unescape(encodeURIComponent(quoteContent)));
+      mailState.stagedAttachments.push({
+        filename: `${quoteRef}_Commercial_Quotation.txt`,
+        size: quoteContent.length,
+        contentType: 'text/plain',
+        dataBase64: b64
+      });
+      renderStagedAttachments();
+      showMailToast(`Attached ${quoteRef}_Commercial_Quotation.txt`);
+    });
+  }
+
+  // Convert to RFQ / Push to SOLAS Classifier
+  if (mailConvertToRfqBtn) {
+    mailConvertToRfqBtn.addEventListener('click', () => {
+      const msg = mailState.selectedMessage;
+      if (!msg) return;
+      playSound('pop');
+
+      const solasTabBtn = document.querySelector('.neu-tab-btn[data-tab="tab-solas-classifier"]');
+      if (solasTabBtn) {
+        solasTabBtn.click();
+      }
+
+      const queryInput = document.getElementById('solasQueryInput') || document.querySelector('input[placeholder*="SOLAS"]');
+      if (queryInput) {
+        queryInput.value = `${msg.subject} - ${msg.fromName || msg.fromEmail}`;
+      }
+
+      showMailToast(`Extracted inquiry from ${msg.fromName || msg.fromEmail} into SOLAS Classifier!`);
+    });
+  }
+
+  // Initialize Mail when Tab is clicked or on startup
+  const mailTabNavBtn = document.getElementById('navTabMail');
+  if (mailTabNavBtn) {
+    mailTabNavBtn.addEventListener('click', () => {
+      if (mailState.messages.length === 0) {
+        loadMailFolders();
+        loadMailList(1);
+      }
+    });
+  }
+
+  // Background check for folder counts on initial load
+  setTimeout(() => {
+    loadMailFolders();
+  }, 1000);
+
   // Initial stream log
   appendTerminalLog('MAB Group Enterprise Maritime Operations Gateway online.', 'ok');
   appendTerminalLog('6 Operational Modules initialized: RFQ Gateway, SOLAS Classifier, Quotation Engine, IACS LB Broker, Customs Boarding, Field Inspection.', 'info');
